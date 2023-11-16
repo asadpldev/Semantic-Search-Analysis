@@ -1,0 +1,27 @@
+{% extends "layout/admin_base.html" %}
+{% load static  %}
+{% block title %}TV Shows{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        {% for show in shows  %}
+        <div class="col-4 mt-3">
+            <div class="card chat-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{show.name|capfirst}}</h5>
+                    <p class="card-text">{{show.description}}</p>
+                    <p class="card-text font-italic">View <a href={{show.link}}>TV Show</a></p>
+
+                    <a href="{% url 'admin_accnt:update_tv_show' show.id %}" class="btn btn-primary">Update TV Show</a>
+                </div>
+            </div>
+        </div>   
+        {% endfor %}
+    </div>
+
+</div>
+
+
+{% endblock content %}

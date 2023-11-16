@@ -1,0 +1,26 @@
+{% extends "layout/base.html" %}
+{% block title %}TV Shows{% endblock title %}
+{% load static  %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for show in shows  %}
+        <div class="col-4 mt-3">
+            <div class="card chat-card">
+                <div class="card-body">
+                    {% include "user/analysis.html" %}
+                    <h5 class="card-title">{{show.name|capfirst}}</h5>
+                    <p class="card-text">{{show.description}}</p>
+                    <p class="card-text font-italic">View <a href={{show.link}}>TV Show</a></p>
+                    <a href="{% url 'acnt:tv_show_detail' show.id %}" class="btn btn-primary">Add Comment</a>
+                </div>
+            </div>
+        </div>   
+        {% endfor %}
+    </div>
+
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,73 @@
+{% extends "layout/base.html" %}
+{% load static  %}
+{% block title %}Add Comment{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+<div class="card mt-5">
+    {% include 'registration/messages.html' %}
+    
+    <h5 class="card-header p-4">{{show.name|capfirst}}</h5>
+    <div class="card-body">
+        {% include "user/analysis.html" %}
+
+        <p><b>Description:</b> {{show.description}}</p>
+        <p><b>Link to Show:</b> {{show.link}}</p>
+
+        {% if comment %}
+        <p><b>Your Comment is recorded:</b> {{comment.comment_text|capfirst}}</p>
+        
+        {% else %}
+        <form class="mt-4" method="POST">
+            {% csrf_token %}
+            <p>{{form|crispy}}</p>
+            <button class="btn btn-outline-primary " type="submit">Add Comment</button>
+        </form>
+        {% endif %}
+      
+</div>
+{% if comments %}
+<div class="row mt-5">
+
+    <div class="col">
+
+        <div class="headings d-flex justify-content-between align-items-center mb-3">
+            <h5 class="ml-3">Recently Added comments({{comments.count}})</h5>
+        </div>
+        {% for comment in comments  %}
+        
+        <div 
+        {% if forloop.first %}
+        class="card_content card p-3"
+        {% else %}
+        class="card_content card p-3 mt-2"
+        {% endif %}
+        >
+            <div class="d-flex justify-content-between align-items-center">
+            <div class="user d-flex flex-row align-items-center">
+            <img 
+            {% if comment.user.profile_pic %}
+            src="{{comment.user.profile_pic.url}}"
+            {% else %}
+            src="https://i.imgur.com/hczKIze.jpg"
+            {% endif %}
+            
+            width="30" class="user-img rounded-circle mr-2">
+            <span><small class="font-weight-bold text-primary">{{comment.user.username}}</small> <small class="font-weight-bold">{{comment.comment_text}}</small></span>            
+          </div>
+          <small>{{comment.created_at|date}}</small>
+
+          </div>
+           
+        </div>
+        {% endfor %}
+
+    </div>
+    
+</div>
+{% endif %} 
+</div>
+</div>
+
+
+{% endblock content %}

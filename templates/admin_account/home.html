@@ -1,0 +1,23 @@
+{% extends "layout/admin_base.html" %}
+{% load static  %}
+{% block title %}Create TV Shows{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+<div class="card mt-5">
+    <h5 class="card-header p-4">Add TVShow</h5>
+    <div class="card-body">
+        {% include 'registration/messages.html' %}
+        <form method="POST">
+        {% csrf_token %}
+        <p>{{form|crispy}}</p>
+        <button class="btn btn-outline-primary " type="submit">Submit</button>
+    </form>
+</div>
+<a class="ml-3" href="{% url 'admin_accnt:tv_show_list' %}">Click to see your recent created TV Shows!</a>
+</div>
+
+</div>
+
+
+{% endblock content %}

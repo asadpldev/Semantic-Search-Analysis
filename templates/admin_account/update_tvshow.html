@@ -1,0 +1,21 @@
+{% extends "layout/admin_base.html" %}
+{% load static  %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+<div class="card mt-5">
+    <h5 class="card-header p-4">Add TVShow</h5>
+    <div class="card-body">
+        {% include 'registration/messages.html' %}
+        <form method="POST">
+        {% csrf_token %}
+        <p>{{form|crispy}}</p>
+        <button class="btn btn-outline-primary " type="submit">Update</button>
+    </form>
+</div>
+</div>
+
+</div>
+
+
+{% endblock content %}

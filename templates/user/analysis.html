@@ -1,0 +1,15 @@
+{% if not request.path == "/tvshows/" %}
+<div class="d-flex align-items-start justify-content-end">
+    <p class="mr-3 text-muted">This is average Analysis based on user added comments!</p>
+</div>
+{% endif %}
+
+            {% if show.get_sentiments == "Neutral" %}
+            <span class="badge rounded-pill bg-warning text-light">{{show.get_sentiments}}</span>
+            {% endif %}
+            {% if show.get_sentiments == "Positive" %}
+            <span class="badge rounded-pill bg-success text-light">{{show.get_sentiments}}</span>
+            {% endif %}
+            {% if show.get_sentiments == "Negative" %}
+            <span class="badge rounded-pill bg-danger text-light">{{show.get_sentiments}}</span>
+            {% endif %}
