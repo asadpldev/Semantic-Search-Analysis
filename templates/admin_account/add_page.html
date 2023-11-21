@@ -1,0 +1,38 @@
+{% extends "layout/admin_base.html" %}
+{% load static  %}
+{% block title %}Add Pages{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+<div class="card mt-5">
+    <h5 class="card-header p-4">Add Page</h5>
+    <div class="card-body">
+        {% include 'registration/messages.html' %}
+        <form method="POST">
+        {% csrf_token %}
+        <p>{{form|crispy}}</p>
+        <button class="btn btn-outline-primary " type="submit">Submit</button>
+    </form>
+</div>
+
+</div>
+<div class="row">
+    {% for page in pages  %}
+    <div class="col-4 mt-3">
+        <div class="card chat-card">
+            <div class="card-body">
+                <h5 class="card-title">{{page.name|capfirst}}</h5>
+                <p class="card-text">{{page.details}}</p>
+                <p class="card-text font-italic">View <a href={{page.link}}>TV Show Details</a></p>
+
+                <a href="{% url 'admin_accnt:update_page' page.id %}" class="btn btn-primary">Update Page</a>
+            </div>
+        </div>
+    </div>   
+    {% endfor %}
+</div>
+
+</div>
+
+
+{% endblock content %}

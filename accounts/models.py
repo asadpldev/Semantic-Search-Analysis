@@ -14,7 +14,7 @@ class CustomUserManger(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-
+    
     def create_superuser(self, email, username=None, password=None):
         user = self.create_user(email, username=username, password=password)
         user.is_admin = True
@@ -23,20 +23,15 @@ class CustomUserManger(BaseUserManager):
         return user
 
 
-
-
-
-
-
 class User(TimeStampMixin ,   AbstractBaseUser):
-    email         = models.EmailField(max_length=255, unique=True)
-    username      = models.CharField(max_length=255, null=True, blank=True)
-    first_name    = models.CharField(max_length=255, null=True, blank=True)
-    last_name     = models.CharField(max_length=255, null=True, blank=True)
-    description   = models.CharField(max_length=255, null=True, blank=True)
-    about         = models.TextField()
-    location         = models.CharField(max_length=255, null=True, blank=True)
-    profile_pic   = models.ImageField( upload_to ='profile_pics' ,   null = True , blank = True )
+    email = models.EmailField(max_length=255, unique=True)
+    username   = models.CharField(max_length=255, null=True, blank=True)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name  = models.CharField(max_length=255, null=True, blank=True)
+    age = models.CharField(max_length=255, null=True, blank=True)
+    gender = models.TextField(null=True, blank=True)
+    location = models.CharField(max_length=255, null=True, blank=True)
+    profile_pic   = models.ImageField( upload_to ='profile_pics',null = True , blank = True )
 
 
 

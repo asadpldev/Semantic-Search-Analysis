@@ -34,7 +34,7 @@ class SignUpView(View):
 
     def post(self, request, *args, **kwargs):
         form = SignUpForm(request.POST)
-        username = request.POST.get("username")
+        # username = request.POST.get("username")
         email = request.POST.get("email")
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
@@ -46,39 +46,14 @@ class SignUpView(View):
             )  
             return redirect("acnt:signup_page")
         if password1 == password2:
-            user = User.objects.create(
-                username=username,
-                email=email,
-                password=password1,
-            )
-            user.set_password(password1)
-            user.is_active = True
-            user.save()
-        # current_site = get_current_site(request)
-        # email_body = {
-        #     'user': user,
-        #     'domain': current_site.domain,
-        #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        #     'token': account_activation_token.make_token(user),
-        # }
-        
-        # link = reverse('acnt:activate', kwargs={
-        #                 'uidb64': email_body['uid'], 'token': email_body['token']})
-
-        # email_subject = 'Activate your account'
-
-        # activate_url = 'http://'+current_site.domain+link
-        # email = EmailMessage(
-        #             email_subject,
-        #             f'Hi {user.username}, Please use the link below to activate your account  {activate_url}',
-        #             'noreply@semycolon.com',
-        #             [email],
-        #         )
-        # email.send(fail_silently=False)
-
-            return redirect("login")
+            if form.is_valid():
+                form.save()
+                return redirect("login")
+            else:
+                messages.error(request,form.errors)
+                return redirect("acnt:signup_page")
         else:
-            messages.error(request,'passwords are not matching!')
+            messages.error(request,"Password are not matching!")
             return redirect("acnt:signup_page")
     def get(self, request, *args, **kwargs):
 
@@ -192,7 +167,7 @@ class CustomLoginView(LoginView):
     def get_success_url(self):
         user = self.request.user
         if user.is_admin:
-            return reverse_lazy('admin_accnt:admin_home_page')  # Replace 'admin_dashboard' with your admin dashboard URL name
+            return reverse_lazy('admin_accnt:admin_dashboard')  # Replace 'admin_dashboard' with your admin dashboard URL name
         return self.success_url
 
     def form_valid(self, form):

@@ -1,5 +1,5 @@
 from django import forms
-from .models import TVShow,Comment
+from .models import TVShow,Comment,Page
 
 # Create your forms here.
 
@@ -9,6 +9,12 @@ class TVShowForm(forms.ModelForm):
 		model = TVShow
 		fields = ("name", "description", "link")
 
+class AddPageForm(forms.ModelForm):
+
+	class Meta:
+		model = Page
+		fields = ("name", "link", "details")
+  
 class CommentForm(forms.ModelForm):
 
 	class Meta:
