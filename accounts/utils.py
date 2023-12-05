@@ -1,7 +1,6 @@
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from six import text_type
-from textblob import TextBlob
 from nltk.corpus import sentiwordnet as swn
 from nltk.corpus import wordnet as wn
 import nltk
@@ -13,6 +12,7 @@ class AppTokenGenerator(PasswordResetTokenGenerator):
 account_activation_token = AppTokenGenerator()
 
 # Download SentiWordNet data
+nltk.download('wordnet')
 nltk.download('sentiwordnet')
 def analyze_sentiment(comment_text, threshold=0.1):
     total_score = 0

@@ -23,13 +23,19 @@ class CustomUserManger(BaseUserManager):
         return user
 
 
-class User(TimeStampMixin ,   AbstractBaseUser):
+class User(TimeStampMixin,AbstractBaseUser):
+    GENDER = (
+        ('male',"Male"),
+        ('female',"Female"),
+        ('other',"Other"),
+        
+    )
     email = models.EmailField(max_length=255, unique=True)
     username   = models.CharField(max_length=255, null=True, blank=True)
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name  = models.CharField(max_length=255, null=True, blank=True)
-    age = models.CharField(max_length=255, null=True, blank=True)
-    gender = models.TextField(null=True, blank=True)
+    age = models.CharField(max_length=255, default="male")
+    gender = models.CharField(max_length=255,default="male",choices=GENDER)
     location = models.CharField(max_length=255, null=True, blank=True)
     profile_pic   = models.ImageField( upload_to ='profile_pics',null = True , blank = True )
 
@@ -64,27 +70,3 @@ class User(TimeStampMixin ,   AbstractBaseUser):
             return f"{self.first_name} {self.last_name}"
         except:
             return self.email
-
-                
- 
-
-
-# class Profile(models.Model):
-#     user                        = models.OneToOneField(User , on_delete= models.CASCADE)
-#     short_description           = models.CharField(max_length=255)
-#     about_you                   = models.TextField()
-#     profile_pic   = models.ImageField( upload_to =get_users_profile ,   null = True , blank = True )
-
-    
-
-
-
-
-# @receiver(post_save, sender=User)
-# def update_user_profile(sender, instance, created, **kwargs):
-#     """
-#     Signals the Profile about User creation.
-#     """
-#     if created:
-#         Profile.objects.create(user=instance)
-#     instance.profile.save()
